@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <!-- Login -->
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.LoginServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountSummary</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.AccountSummaryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <!-- Logout -->
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.LogoutServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <!-- BankAccount -->
+    <servlet>
+        <servlet-name>BankAccountServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.BankAccountServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BankAccountServlet</servlet-name>
+        <url-pattern>/bankaccount</url-pattern>
+    </servlet-mapping>
+    <!-- AccountSummary -->
+    <servlet>
+        <servlet-name>AccountSummaryServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.AccountSummaryServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccountSummaryServlet</servlet-name>
+        <url-pattern>/accountsummary</url-pattern>
+    </servlet-mapping>
+    <!-- Savings -->
+    <servlet>
+        <servlet-name>SavingsServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.SavingsServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SavingsServlet</servlet-name>
+        <url-pattern>/savings</url-pattern>
+    </servlet-mapping>
+    <!-- Checking -->
+    <servlet>
+        <servlet-name>CheckingServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.CheckingServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CheckingServlet</servlet-name>
+        <url-pattern>/checking</url-pattern>
+    </servlet-mapping>
+    <!-- TransferRequest -->
+    <servlet>
+        <servlet-name>TransferRequestServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.TransferRequestServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TransferRequestServlet</servlet-name>
+        <url-pattern>/transferrequest</url-pattern>
+    </servlet-mapping>
+    <!-- TransferService -->
+    <servlet>
+        <servlet-name>TransferServiceServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.TransferServiceServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TransferServiceServlet</servlet-name>
+        <url-pattern>/transferservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>welcome.jsp</welcome-file>
+        <!--welcome-file>redirect.jsp</welcome-file-->
+    </welcome-file-list>
+</web-app>
