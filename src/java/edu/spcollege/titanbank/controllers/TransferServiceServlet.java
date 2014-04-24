@@ -39,7 +39,7 @@ public class TransferServiceServlet extends HttpServlet {
     
     private String userid;
     private UserLoginStatus userLoginStatus;
-    private Customer customer;
+    private DBPerson customer;
     private String message;
     private TransferService transferService;
     List<TransferRequest> transactions;

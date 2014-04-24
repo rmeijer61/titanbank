@@ -6,6 +6,8 @@
 
 package edu.spcollege.titanbank.bll;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author admin
@@ -21,7 +23,7 @@ public class CheckingAccount extends BankAccount {
     private double balance = 0.0;
     private String balanceFormatted;
     
-    public CheckingAccount() {
+    public CheckingAccount() throws SQLException, ClassNotFoundException {
         super();
         this.beginBalance = 800.0;
         this.depositTotal = 550.0;

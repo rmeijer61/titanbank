@@ -12,15 +12,18 @@
     Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
     if (loggedIn == null || loggedIn.booleanValue() == false) {
 %>
-        <jsp:forward page="login.jsp" />
+        <jsp:forward page="welcome.jsp" />
 <%
     }
 %>
 <%! Date today = new Date(); %>
-<jsp:useBean id="user" scope="session" class="edu.spcollege.titanbank.bll.User" />
-<jsp:useBean id="transferrequest" scope="session" class="edu.spcollege.titanbank.bll.TransferRequest" />
-<jsp:useBean id="transferservice" scope="session" class="edu.spcollege.titanbank.bll.TransferService" />
 
+<% 
+    String firstName;
+    String lastName;
+    firstName = (String) request.getAttribute("fistName");
+    lastName = (String) request.getAttribute("lastName");
+%>
 <!DOCTYPE html>
 <html>
 <jsp:include page="stdhead.jsp" />    
@@ -30,13 +33,7 @@
 </head>
 <body class="contentBody">
 <div>
-    <span><jsp:getProperty name="user"
-               property="firstName" />
-    </span>
-    <span><jsp:getProperty name="user"
-               property="lastName" />
-    </span>
-    <span>&nbsp;&nbsp;Logged in at&nbsp <%= today %></span>
+    <span><%= firstName + " " + lastName %>&nbsp;&nbsp;Logged in at&nbsp <%= today %></span>
 </div>
 <div class="contentWrapper">
 <div class="content_2col_heading">
@@ -46,7 +43,7 @@
 <div class="transferActivitySelectBox">
     <form action="transferservice" method="post">
         <div class="transferStatusSelect">
-            <label class="transferActivitySelect" for="transferStatus">Select the transfer status:</label>
+            <label class="transferStatusSelect" for="transferStatus">Select the transfer status:</label>
             <select id="transferStatus" name="transferStatus">
                 <option value="PENDING" >Pending</option>
                 <option value="COMPLETED">Completed</option>
@@ -107,7 +104,8 @@
             
             <%
                 String transferStatus = request.getParameter("transferStatus");
-                ArrayList<TransferRequest> transactions = (ArrayList) transferservice.getTransactions(transferStatus);
+                TransferService transferService = new TransferService();
+                ArrayList<TransferRequest> transactions = (ArrayList) transferService.getTransactions(transferStatus);
                 for (int i=0; i < transactions.size(); i++) {
                     out.println(
                         // Column 1

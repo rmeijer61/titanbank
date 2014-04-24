@@ -15,8 +15,8 @@
 <link href="css/main.css" rel="stylesheet" type="text/css">
 </head>
 
-<body class="contentBody">
-<div class="contentWrapper">
+<body>
+<div id="wrapper">
 
 <div class="loginCol1">
 <div class="loginBoxOutline">
@@ -48,14 +48,21 @@
 	            <input type="text" size="30" name="password" id="password" />
 	        </div>
             </div>
+        <div class="content_form_2col_r1">
+            <label class="content_form_2col_r1_c1" for="userType">User type:</label>
+            <select id="userType" name="userType">
+                <option value="CUSTOMER">Customer</option>
+                <option value="EMPLOYEE">Employee</option>
+            </select>
+        </div>            
             <div class="content_form_2col_r1">
-                <div class="content_form_2col_r1_c1">&nbsp</div>
+                <div class="content_form_2col_r1_c1">&nbsp;</div>
                 <div class="content_form_2col_r1_c2" >
 	            <input name="login" value="Login" type="submit" class="content_2col_submit"/>
 	        </div>
             </div>
             <div class="content_form_2col_r1">
-                <div class="content_form_2col_r1_c1">&nbsp</div>
+                <div class="content_form_2col_r1_c1">&nbsp;</div>
                 <div class="content_form_2col_r1_c2" >
                     <div id="loginMessage">
                         <% 
@@ -67,10 +74,7 @@
                 </div>
             </div>
         </div>
-        
-
     </form>
-
 </div> <!-- End of detail -->
      
 <div class="loginLinkBox">

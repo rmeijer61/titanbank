@@ -18,10 +18,6 @@
         <servlet-class>edu.spcollege.titanbank.controllers.LoginServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>AccountSummary</servlet-name>
-        <servlet-class>edu.spcollege.titanbank.controllers.AccountSummaryServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -35,6 +31,26 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <!-- Index -->
+    <servlet>
+        <servlet-name>IndexServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.IndexServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>IndexServlet</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+    <!-- Index2 -->
+    <servlet>
+        <servlet-name>Index2Servlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.Index2Servlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Index2Servlet</servlet-name>
+        <url-pattern>/index2</url-pattern>
     </servlet-mapping>
     <!-- BankAccount -->
     <servlet>
@@ -96,6 +112,37 @@
         <servlet-name>TransferServiceServlet</servlet-name>
         <url-pattern>/transferservice</url-pattern>
     </servlet-mapping>
+    <!-- Customer List -->
+    <servlet>
+        <servlet-name>ViewCustomerListServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.ViewCustomerListServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewCustomerListServlet</servlet-name>
+        <url-pattern>/viewcustomerlist</url-pattern>
+    </servlet-mapping>
+    <!-- Add Customer -->
+    <servlet>
+        <servlet-name>AddCustomerServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.AddCustomerServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddCustomerServlet</servlet-name>
+        <url-pattern>/addcustomer</url-pattern>
+    </servlet-mapping>
+    <!-- View Customer -->
+    <servlet>
+        <servlet-name>ViewCustomerServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.ViewCustomerServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewCustomerServlet</servlet-name>
+        <url-pattern>/viewcustomer</url-pattern>
+    </servlet-mapping>
+    <!-- -->
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -106,7 +153,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>welcome.jsp</welcome-file>
+        <welcome-file>/WEB-INF/jsp/welcome.jsp</welcome-file>
         <!--welcome-file>redirect.jsp</welcome-file-->
     </welcome-file-list>
 </web-app>

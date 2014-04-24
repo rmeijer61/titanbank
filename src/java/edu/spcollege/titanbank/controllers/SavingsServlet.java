@@ -6,7 +6,7 @@
 
 package edu.spcollege.titanbank.controllers;
 
-import edu.spcollege.titanbank.bll.Authenticate;
+import edu.spcollege.titanbank.bll.AuthenticationService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;

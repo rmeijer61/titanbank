@@ -32,6 +32,9 @@ a:active {
    cursor:default;
    color:blue;
 }
+.label {
+    color:black;
+}
 /* ******************************************* */
 body {
     color:#666666;
@@ -71,8 +74,9 @@ fieldset {
     width:1024px; 
     height:130px;
     margin-bottom:1px;
-    background-color:#ffffff;
-    background-image:url('../images/banner_large.jpg');
+    color:#ffffff;
+    background-color:#C8E0FD; /* Windows blue */
+    background-image:url('../images/titanbanner.jpg');
     background-repeat: no-repeat;
     /*border: 1px solid brown;*/ /*Testing*/
 }
@@ -94,15 +98,15 @@ fieldset {
 #header01_r1_c1_r1 {
     width:96%; /*account for the margin-left*/
     height:49%;
-    margin-top:10px;
+    margin-top:5px;
     margin-left:10px;
     /*border: 1px solid purple;*/ /*Testing*/
     border-bottom:1px solid #ff7f1d; /* red line */
     text-align:left;
-    font-size:24pt;
+    font-size:30pt;
     font-weight:bold;
-    font-family:Arial,sans-serif,Arial,Helvetica,verdana;
-    color:red;
+    font-family: Georgia,sans-serif,Arial,Helvetica,verdana;
+    color:#ffffff;
     opacity:1;
     -webkit-transition: opacity 1s linear;
     -o-transition: opacity 1s linear;
@@ -125,7 +129,9 @@ fieldset {
     text-align:right;
     font-size:10pt;
     font-style:inherit;
-    color:#56829f;
+    font-weight:bold;
+    /*color:#56829f;*/
+    color:yellow;
     opacity:1;
     -webkit-transition: opacity 1s linear;
     -o-transition: opacity 1s linear;
@@ -278,6 +284,17 @@ navContent {
     border:0px;
     /*border:1px solid purple;*//*Testing*/
 }
+
+.groupBox {
+    clear:both;
+    position:relative;
+    float:left;
+    width:100%;
+    margin-top:5px;
+    border:1px solid #f1f1f1;
+    border-radius:5px;
+    padding:10px;
+}
 /* **************************************** */
 /* iframe content pages */
 /* **************************************** */
@@ -308,13 +325,13 @@ navContent {
     font-size:14pt;
     font-weight:bold;
     margin-left:5px;
-    color: #606060;
+    color:#202020;
     /*border:1px solid blue;*/ /*for testing*/
 }
 .content_2col_subheading{
     font-size:12pt;
     font-weight:bold;
-    color:#808080;
+    color:#202020;
 }
 .content_2col_detail{
     clear:both;
@@ -322,7 +339,7 @@ navContent {
     float:left;
     width:100%;
     font-size: 11pt;
-    color: #606060;
+    color:black;
     margin-top:3px;
     /*border:1px solid gray;*/ /*for testing*/
 }
@@ -359,12 +376,26 @@ navContent {
     float:left;
     margin-top:10px;
 }
+.exitButton{
+    display:inline-block;
+}
+.submitBox10 {
+    padding-left:10px;
+    width:300px;
+}
 /* Two column form layout */
 .content_form_2col_r1 {
     clear:both;
     position:relative;
     float:left;
     width:200px;
+    margin-bottom:4px;
+}
+.content_form_2col_r1_300 {
+    clear:both;
+    position:relative;
+    float:left;
+    width:300px;
     margin-bottom:4px;
 }
 .content_form_2col_r1_c1 {
@@ -382,8 +413,9 @@ navContent {
     /*border:1px solid yellow;*/ /*for testing*/
 }
 .content_form_label {
+    padding-right:3px;
     font-size:11pt;
-    color:#606060;
+    color:black;
 }
 /* *************************************************** */
 /* Login page specific selectors */
@@ -544,6 +576,7 @@ navContent {
     padding:10px;
     border:1px solid #808080;/*for testing*/
     border-radius:5px;
+    color:#202020;
 }
 .summaryBoxTitle{
     clear:both;
@@ -555,7 +588,7 @@ navContent {
     text-align:center;
     font-size:12pt;
     font-weight:bold;
-    color:#808080;
+    color:#202020;
     /*border:1px solid #808080;*//*for testing*/
 }
 .summaryBoxHeading{
@@ -566,7 +599,19 @@ navContent {
     text-align:left;
     font-size:11pt;
     font-weight:bold;
-    background-color:#a0a0a0;
+        /* IE */ 
+    background-image: -ms-linear-gradient(top, #a0a0a0 0%, #707070 100%);
+    /* Mozilla Firefox */ 
+    background-image: -moz-linear-gradient(top, #a0a0a0 0%, #707070 100%);
+    /* Opera */ 
+    background-image: -o-linear-gradient(top, #a0a0a0 0%, #707070 100%);
+    /* Webkit (Safari/Chrome 10) */ 
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #a0a0a0), color-stop(1, #707070));
+    /* Webkit (Chrome 11+) */ 
+    background-image: -webkit-linear-gradient(top, #a0a0a0 0%, #707070 100%);
+    /* W3C Markup, IE10 Release Preview */   
+    background-image: linear-gradient(to bottom, #a0a0a0 0%, #707070 100%);
+    background-repeat:repeat-x;
     color:#ffffff;
     /*border:1px solid green;/*for testing*/
 }
@@ -577,7 +622,7 @@ navContent {
     width:100%;
     text-align:left;
     font-size:11pt;
-    color:#505050;
+    color:#202020;
     /*border:1px solid red;*/
 }
 .summaryBoxDetail_r1{
@@ -586,7 +631,7 @@ navContent {
     float:left;
     width:100%;
     text-align:left;
-    color:#505050;
+    color:black;
     /*border:1px solid blue;*/
 }
 .summaryBoxTotal {
@@ -596,7 +641,6 @@ navContent {
     width:100%;
     text-align:left;
     font-size:11pt;
-    color:#505050;
     border-top:1px solid #808080;
 }
 .summaryBox_c1{
@@ -612,7 +656,21 @@ navContent {
     text-align:right;
     /*border:1px solid gray;*//*for testing*/
 }
-
+.summaryBox_c1_detail {
+    float:left;
+    width:60%;
+    margin:5px;
+    color:black;
+    /*border:1px solid red;*//*for testing*/
+}
+.summaryBox_c2_detail {
+    float:left;
+    width:30%;
+    margin:5px;
+    text-align:right;
+    color:black;
+    /*border:1px solid green;*//*for testing*/
+}
 /* *************************************************** */
 /* Transfer Box */
 /* *************************************************** */
@@ -635,14 +693,14 @@ navContent {
     text-align:left;
     font-size:12pt;
     font-weight:bold;
-    color:#606060;
+    color:#202020;
     /*border:1px solid #808080;*//*for testing*/
 }
 .transferBoxDetail{
     text-align:left;
     margin:5px;
     font-size:11pt;
-    color:#606060;
+    color:black;
 }
 .transferBoxDetail_r1{
     clear:both;
@@ -659,6 +717,7 @@ navContent {
     width:60%;
     margin:3px;
     padding-left:5px;
+    color:black;
     /*border:1px solid gray;*//*for testing*/
 }
 .transferBox_c2{
@@ -667,6 +726,7 @@ navContent {
     margin:3px;
     padding-right:5px;
     text-align:right;
+    color:black;
     /*border:1px solid gray;*//*for testing*/
 }
 #transferAvailableBalanceBox {
@@ -695,6 +755,7 @@ navContent {
 .transferAccountSelect{
     float:left;
     font-size:11pt;
+    color:black;
     /*border:1px solid green;*/ /* for testing */
 }
 .transferActivitySelectBox{
@@ -710,6 +771,7 @@ navContent {
 .transferStatusSelect{
     float:left;
     font-size:11pt;
+    color:black;
     /*border:1px solid green;*/ /* for testing */
 }
 .transferStatusSubmit{
@@ -737,7 +799,7 @@ navContent {
     text-align:center;
     font-size:12pt;
     font-weight:bold;
-    color:#808080;
+    color:#202020;
     /*border:1px solid #808080;*//*for testing*/
 }
 .transferActivityBoxHeading{
@@ -748,7 +810,19 @@ navContent {
     text-align:left;
     font-size:11pt;
     font-weight:bold;
-    background-color:#a0a0a0;
+            /* IE */ 
+    background-image: -ms-linear-gradient(top, #a0a0a0 0%, #707070 100%);
+    /* Mozilla Firefox */ 
+    background-image: -moz-linear-gradient(top, #a0a0a0 0%, #707070 100%);
+    /* Opera */ 
+    background-image: -o-linear-gradient(top, #a0a0a0 0%, #707070 100%);
+    /* Webkit (Safari/Chrome 10) */ 
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #a0a0a0), color-stop(1, #707070));
+    /* Webkit (Chrome 11+) */ 
+    background-image: -webkit-linear-gradient(top, #a0a0a0 0%, #707070 100%);
+    /* W3C Markup, IE10 Release Preview */   
+    background-image: linear-gradient(to bottom, #a0a0a0 0%, #707070 100%);
+    background-repeat:repeat-x;
     color:#ffffff;
     /*border:1px solid green;/*for testing*/
 }
@@ -759,7 +833,7 @@ navContent {
     width:100%;
     text-align:left;
     font-size:11pt;
-    color:#505050;
+    color:black;
     /*border:1px solid red;*/
 }
 .transferActivityBoxDetail_r1{
@@ -768,7 +842,7 @@ navContent {
     float:left;
     width:100%;
     text-align:left;
-    color:#505050;
+    color:black;
     /*border:1px solid blue;*/
 }
 .transferActivityBoxTotal {

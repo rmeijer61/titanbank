@@ -6,24 +6,28 @@
 
 package edu.spcollege.titanbank.controllers;
 
+import edu.spcollege.titanbank.bll.*;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import edu.spcollege.titanbank.bll.*;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author admin
  */
-@WebServlet(name = "BankAccountServlet", urlPatterns = {"/BankAccountServlet"})
-public class BankAccountServlet extends HttpServlet {
+@WebServlet(name = "ViewCustomerListServlet", urlPatterns = {"/ViewCustomerListServlet"})
+public class ViewCustomerListServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,47 +39,42 @@ public class BankAccountServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     
-    private String userid;
-    private int customerId = 0;
-    private UserLoginStatus userLoginStatus;
-    private Customer customer;
-    private BankAccount bankAccount;
-    private double startingBalance;
     private String message;
-   
+    private String nextView;
+    private HttpSession session;
+    private Boolean loggedIn;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         
-        // Note: simulation
-        customerId = 0;
-        customer = new Customer(customerId);
-        startingBalance = 200.0;
+               
+        // Verify that the user is logged in
+        session = request.getSession();
+        loggedIn = (Boolean) session.getAttribute("loggedIn");
         
-        // Verify login
-        userid = "cop2806";
-        userLoginStatus = new UserLoginStatus(userid);
-        if (userLoginStatus.isLoggedIn(userid)) {
-            
-            // Open the account
-            bankAccount = new BankAccount(customer, startingBalance, BankAccount.AccountType.SAVINGS );
-           
-            message = "Opened a " + bankAccount.getAccountType() + " account with " + bankAccount.getBalance() + " dollars.";     
-        
-            try (PrintWriter out = response.getWriter()) {
-                /* TODO output your page here. You may use following sample code. */
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet BankAccountServlet</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Servlet BankAccountServlet at " + request.getContextPath() + "</h1>");
-                out.println("<h4>" + message + "</h4>");
-                out.println("</body>");
-                out.println("</html>");
-            }
+        if (loggedIn == null || loggedIn == false) {
+            nextView = "/WEB-INF/jsp/welcome.jsp";
+            ServletContext context = getServletContext();
+            RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
+            dispatcher.forward(request,response);        
         }
+        else {
+            
+            CustomerList customerList = new CustomerList();
+            List<PersonName> personList = null;
+            personList = customerList.queryCustomerList();
+            request.setAttribute("personList", personList);
+            
+            //ArrayList resultSet = (ArrayList) customerList.queryCustomerList();
+            //request.setAttribute("resultSet", resultSet);
+                        
+            nextView = "/WEB-INF/jsp/viewcustomerlist.jsp";
+            ServletContext context = getServletContext();
+            RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
+            dispatcher.forward(request,response);        
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -93,9 +92,9 @@ public class BankAccountServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(BankAccountServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewCustomerListServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BankAccountServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewCustomerListServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -113,9 +112,9 @@ public class BankAccountServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(BankAccountServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewCustomerListServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BankAccountServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewCustomerListServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

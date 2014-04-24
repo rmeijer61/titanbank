@@ -1,3 +1,9 @@
+<%-- 
+    Document   : index2
+    Created on : Apr 17, 2014, 3:25:08 PM
+    Author     : rmeijer
+--%>
+
 <%@ page contentType="text/html" pageEncoding="UTF-8"
          import="java.util.Date, java.io.* ,javax.naming.*, 
                  edu.spcollege.titanbank.bll.*" 
@@ -20,13 +26,13 @@
 <body>
 <div id="wrapper">
 <!-- *** Header section *** -->
-<jsp:include page="header.jsp" />
+<jsp:include page="header2.jsp" />
 
 <!-- *** MAIN SECTION *** -->
 <div id="main">
 
 <div id="main_content">
-    <iframe id="main_content_iframe" name="main_content_iframe" src="accountsummary">
+    <iframe id="main_content_iframe" name="main_content_iframe" src="">
     </iframe> 
 </div>
 

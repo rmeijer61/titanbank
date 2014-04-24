@@ -11,18 +11,22 @@
     Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
     if (loggedIn == null || loggedIn.booleanValue() == false) {
 %>
-        <jsp:forward page="login.jsp" />
+        <jsp:forward page="welcome.jsp" />
 <%
     }
 %>
 <%! Date today = new Date(); %>
-<jsp:useBean id="user" scope="session" class="edu.spcollege.titanbank.bll.User" />
-<jsp:useBean id="transferrequest" scope="session" class="edu.spcollege.titanbank.bll.TransferRequest" />
-<% // SavingsAccount extends BankAccount %>
-<jsp:useBean id="savingsaccount" scope="session" class="edu.spcollege.titanbank.bll.SavingsAccount" />
-<% // CheckingAccount extends BankAccount %>
-<jsp:useBean id="checkingaccount" scope="session" class="edu.spcollege.titanbank.bll.CheckingAccount" />
 
+<% 
+    String firstName;
+    String lastName;
+    firstName = (String) request.getAttribute("fistName");
+    lastName = (String) request.getAttribute("lastName");
+    String savingsBalance = "";
+    String checkingBalance = "";
+    savingsBalance = (String) request.getAttribute("savingsBalance");
+    checkingBalance = (String) request.getAttribute("checkingBalance");
+%>
 <!DOCTYPE html>
 <html>
 <jsp:include page="stdhead.jsp" />    
@@ -33,13 +37,7 @@
 <body class="contentBody">
 <div id="contentWrapper">
 <div>
-    <span><jsp:getProperty name="user"
-               property="firstName" />
-    </span>
-    <span><jsp:getProperty name="user"
-               property="lastName" />
-    </span>
-    <span>&nbsp;&nbsp;Logged in at&nbsp <%= today %></span>
+    <span><%= firstName + " " + lastName %>&nbsp;&nbsp;Logged in at&nbsp <%= today %></span>
 </div>    
 <div class="content_2col_heading">
     <h3>Schedule Transfer</h3>
@@ -63,13 +61,8 @@
                 <div id="transferAvailableBalanceBox">
                     <span>
                         Available balance<br />
-                        Savings:&nbsp; 
-                        <jsp:getProperty name="savingsaccount"
-                         property="balanceFormatted" />
-                        <br />
-                        Checking:&nbsp;
-                        <jsp:getProperty name="checkingaccount"
-                         property="balanceFormatted" />
+                        Savings:&nbsp; <%= savingsBalance %><br />
+                        Checking:&nbsp; <%= checkingBalance %>
                     </span>
                 </div>
             </div>
@@ -88,7 +81,7 @@
                 <label class="content_form_label" for="amount">Amount: </label>
             </div>
             <div class="content_form_2col_r1_c2" >
-                <input type="number" size="30" name="transferAmount" id="transferAmount" />
+                <input type="number" size="10" name="transferAmount" id="transferAmount" />
             </div>
         </div>
     </div>
@@ -129,18 +122,12 @@
                 <label class="content_form_label" for="userid">Date: </label>
             </div>
             <div class="content_form_2col_r1_c2" >
-                <input type="text" size="30" name="transferDate" id="transferDate" />
+                <input type="text" size="10" name="transferDate" id="datepicker" />
             </div>
         </div>
     </div>
 </div>
 <input name="transfer" value="Transfer" type="submit" class="content_2col_submit"/>
-
-<jsp:setProperty name="transferrequest" property="sourceType" value="transferFromAccountType"/>
-<jsp:setProperty name="transferrequest" property="destinationType" value="transferToAccountType"/>
-<jsp:setProperty name="transferrequest" property="amountString" value="transferAmount" />
-<jsp:setProperty name="transferrequest" property="transferImmediately" value="transferImmediately"/>
-<jsp:setProperty name="transferrequest" property="transferDateString" value="transferDate"/>
 
 </form>
                    

@@ -11,7 +11,7 @@
     Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
     if (loggedIn == null || loggedIn.booleanValue() == false) {
 %>
-        <jsp:forward page="/WEB-INF/jsp/login.jsp" />
+        <jsp:forward page="/WEB-INF/jsp/welcom.jsp" />
 <%
     }
 %>
@@ -46,7 +46,7 @@
     </div>
     <div class="summaryBoxHeading">
         <div class="summaryBox_c1">
-            <span>Activity</span>
+            <span></span>
         </div>
         <div class="summaryBox_c2">
             <span>Amount</span>
@@ -55,10 +55,10 @@
 
     <div class="summaryBoxTotal">
         <div class="summaryBoxDetail_r1">        
-            <div class="summaryBox_c1">
-                <span>Balance</span>
+            <div class="summaryBox_c1_detail">
+                <span>Money Market Savings</span>
             </div>
-            <div id="summaryBoxDetail_savingsTotal" class="summaryBox_c2">
+            <div id="summaryBoxDetail_savingsTotal" class="summaryBox_c2_detail">
                 <span>$0.00</span>
             </div>
         </div>
@@ -72,7 +72,7 @@
     </div>
     <div class="summaryBoxHeading">
         <div class="summaryBox_c1">
-            <span>Activity</span>
+            <span></span>
         </div>
         <div class="summaryBox_c2">
             <span>Amount</span>
@@ -81,10 +81,10 @@
 
     <div class="summaryBoxTotal">
         <div class="summaryBoxDetail_r1">        
-            <div class="summaryBox_c1">
-                <span>Balance</span>
+            <div class="summaryBox_c1_detail">
+                <span>Classic Interest Checking</span>
             </div>
-            <div id="summaryBoxDetail_checkingTotal" class="summaryBox_c2">
+            <div id="summaryBoxDetail_checkingTotal" class="summaryBox_c2_detail">
                 <span>$0.00</span>
             </div>
         </div>

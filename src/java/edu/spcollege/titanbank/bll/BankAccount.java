@@ -2,6 +2,7 @@ package edu.spcollege.titanbank.bll;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.Locale;
 
 public class BankAccount implements Serializable {
@@ -11,12 +12,14 @@ public class BankAccount implements Serializable {
     }
     
     private Currency currency;
-    private final Customer customer;
+    private int customerId = 0;
+    private DBPerson person;
+    private Customer customer;
     private double balance;
     private final AccountType typeOfAccount;
     
-    public BankAccount() {
-        this.customer = new Customer("cop2806");
+    public BankAccount() throws SQLException, ClassNotFoundException {
+        this.customer = new Customer(customerId);
         this.typeOfAccount = AccountType.SAVINGS;
     }
     

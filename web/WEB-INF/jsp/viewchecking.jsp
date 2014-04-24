@@ -11,14 +11,26 @@
     Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
     if (loggedIn == null || loggedIn.booleanValue() == false) {
 %>
-        <jsp:forward page="login.jsp" />
+        <jsp:forward page="welcome.jsp" />
 <%
     }
 %>
 <%! Date today = new Date(); %>
-<jsp:useBean id="user" scope="session" class="edu.spcollege.titanbank.bll.User" />
-<% // CheckingAccount extends BankAccount %>
-<jsp:useBean id="checkingaccount" scope="session" class="edu.spcollege.titanbank.bll.CheckingAccount" />
+
+<% 
+    String firstName;
+    String lastName;
+    firstName = (String) request.getAttribute("fistName");
+    lastName = (String) request.getAttribute("lastName");
+    String checkingBeginBalance = "";
+    String checkingDepositTotal = "";
+    String checkingWithdrawTotal = "";
+    String checkingBalance = "";
+    checkingBeginBalance = (String) request.getAttribute("checkingBeginBalance");
+    checkingDepositTotal = (String) request.getAttribute("checkingDepositTotal");
+    checkingWithdrawTotal = (String) request.getAttribute("checkingWithdrawTotal");      
+    checkingBalance  = (String) request.getAttribute("checkingBalance");      
+%>
 
 <!DOCTYPE html>
 <html>
@@ -30,13 +42,7 @@
 <body class="contentBody">
 <div id="contentWrapper">
 <div>
-    <span><jsp:getProperty name="user"
-               property="firstName" />
-    </span>
-    <span><jsp:getProperty name="user"
-               property="lastName" />
-    </span>
-    <span>&nbsp;&nbsp;Logged in at&nbsp <%= today %></span>
+    <span><%= firstName + " " + lastName %>&nbsp;&nbsp;Logged in at&nbsp <%= today %></span>
 </div>
 <div class="content_2col_heading">
     <h3>Checking Account Summary</h3>
@@ -61,8 +67,7 @@
             </div>
             <div id="summaryBoxDetail_beginBalance" class="summaryBox_c2"> 
                 <span>
-                    <jsp:getProperty name="checkingaccount"
-                     property="beginBalanceFormatted" />
+                    <%= checkingBeginBalance %>
                 </span>
             </div>
         </div>
@@ -72,8 +77,7 @@
             </div>
             <div id="summaryBoxDetail_depositTotal" class="summaryBox_c2"> 
                 <span>
-                    <jsp:getProperty name="checkingaccount"
-                     property="depositTotalFormatted" />
+                    <%= checkingDepositTotal %>
                 </span>
             </div>
         </div>
@@ -83,8 +87,7 @@
             </div>
             <div id="summaryBoxDetail_withdrawalTotal" class="summaryBox_c2"> 
                 <span>
-                    <jsp:getProperty name="checkingaccount"
-                     property="withdrawalTotalFormatted" />
+                    <%= checkingWithdrawTotal %>
                 </span>
             </div>
         </div>
@@ -96,8 +99,7 @@
             </div>
             <div id="summaryBoxDetail_monthTotal" class="summaryBox_c2">
                 <span>
-                    <jsp:getProperty name="checkingaccount"
-                     property="balanceFormatted" />
+                    <%= checkingBalance %>
                 </span>
             </div>
         </div>
