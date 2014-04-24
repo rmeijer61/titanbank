@@ -1,0 +1,187 @@
+/* Menubar navigation container */
+.navmenubar{
+/*clear:both;
+position:relative;
+float:none;*/
+font:bold 12px Verdana;
+height:100%;
+padding:0;
+margin:0;
+}
+
+/* Menubar navigation list */
+.navmenubar > ul{
+/*clear:both;
+position:relative;
+float:left;*/
+/*z-index:100;*/
+margin:0;
+padding:0;
+list-style-type:none;
+/*border:1px solid red;*/
+}
+
+/* Menubar navigation list items */
+.navmenubar > ul > li{
+position:relative;
+display:inline;
+float:left;
+margin:0;
+padding:0;
+}
+
+/* Menubar navigation anchors */
+.navmenubar > ul > li > a{
+display:block;
+color:#ffffff;
+margin:0;
+padding-top:8px;
+padding-right:12px;
+padding-left:20px;/* Important for horizontal position of submenu*/ 
+padding-right:20px;
+padding-bottom:14px; /*Important to vertical postion of submenu */
+border-right:1px solid #f1f1f1;
+font-weight:bold;
+text-decoration:none;
+}
+
+.navmenubar > ul > li .selected { 
+/*CSS class that's dynamically added to the currently active menu items' LI A element*/
+color:#016BA5;
+font-weight:bold;
+}
+.navmenubar > ul > li:hover { 
+/*background of menu items during onmouseover (hover state)*/
+background:#f1f1f1; /*rsm - need to find a better color*/
+color: #016BA5;
+}
+.navmenubar > ul > li > a:hover{ 
+/*background of menu items during onmouseover (hover state)*/
+background:#f1f1f1;
+color: #016BA5;
+}
+	
+/* sub menus ******************************************************************************************* */
+.navmenubar > ul > li > ul {
+position:absolute;
+display:none;
+visibility:hidden;
+z-index:-1;
+width: 160px;
+border:1px solid #016BA5;
+list-style-type:none;
+}
+
+/*Sub level menu list items */
+.navmenubar > ul > li > ul > li {
+position:relative;
+display:block; 
+float:none; /*rsm - very important*/
+z-index:-1;
+width:100%;
+height:30px;
+background:#f1f1f1;
+color:#016BA5;
+}
+
+/* Sub level menu links style */
+.navmenubar > ul > li > ul > li > a {
+z-index:-1;
+width:100%;
+height:100%;
+margin:0px;
+padding:0px;
+padding-left:10px;
+text-align:left;
+vertical-align:middle;
+}
+.navmenubar.selected { 
+/*CSS class that's dynamically added to the currently active menu items' LI A element*/
+font-weight:bold;
+color:#4f6128;
+}
+.navmenubar > ul > li > ul > li a:visited {
+text-decoration:none;
+color:#7B3416; 
+}
+.navmenubar > ul > li > ul > li a:link {
+font-style:inherit;
+text-decoration:none;
+color:#016BA5; /* Menu item color */
+}
+.navmenubar > ul > li > ul > li a:hover {
+background-color:#ffffff;
+text-decoration:underline;
+font-weight:bold;
+color:#016BA5;
+}
+.navmenubar > ul > li > ul > li a:active {
+font-weight:normal;
+font-style:inherit;
+text-decoration:none;
+color:#016BA5;
+}	
+/*Third level sub menu ***************************************************************************** */
+.navmenubar > ul > li > ul > li > ul {
+top: 0;
+position:absolute;
+z-index:100;
+display: none; /*collapse all sub menus to begin with*/
+visibility: hidden;
+width:160px;
+border:1px solid #016BA5;
+padding:0;
+list-style-type:none;
+}
+.navmenubar > ul > li > ul > li > ul  > li {
+position:relative;
+z-index:100;
+display:block; 
+float:none; /*rsm - very important*/
+width:100%;
+height:30px;
+background:#f1f1f1;
+color:#016BA5;
+}
+.navmenubar > ul > li > ul > li > ul  > li  > a {
+z-index:100;
+width:100%;
+height:100%;
+margin:0px;
+padding:0px;
+padding-left:10px;
+text-align:left;
+vertical-align:middle;
+}
+
+/* *********************************************************************************************** */
+
+/* Hack for IE \*/
+* html .navmenubar{height: 1%;} /*Holly Hack for IE7 and below*/
+
+/* Sub-menu shadowing not used */
+.ddshadow{ 
+position: absolute;
+left: 0;
+top: 0;
+width: 0;
+height: 0;
+background-color: #ccc; /* generally should be just a little lighter than the box-shadow color for CSS3 capable browsers */
+}
+
+.toplevelshadow{
+/*margin: 5px 0 0 5px;*/ /* in NON CSS3 capable browsers gives the offset of the shadow */
+/*opacity: 0.8;*/ /* shadow opacity mostly for NON CSS3 capable browsers. Doesn't work in IE */
+}
+
+.ddcss3support .ddshadow.toplevelshadow {
+/*margin: 0;*/ /* in CSS3 capable browsers overrides offset from NON CSS3 capable browsers, allowing the box-shadow values in the next selector to govern that */
+/* opacity: 1; */ /* optionally uncomment this to remove partial opacity for browsers supporting a box-shadow property which has its own slight gradient opacity */
+}
+
+.ddcss3support .ddshadow {
+background-color: transparent;
+/*box-shadow: 5px 5px 5px #aaa;*/ /* box-shadow color generally should be a little darker than that for the NON CSS3 capable browsers background-color */
+/*-moz-box-shadow: 5px 5px 5px #aaa;
+-webkit-box-shadow: 5px 5px 5px #aaa;*/
+}
