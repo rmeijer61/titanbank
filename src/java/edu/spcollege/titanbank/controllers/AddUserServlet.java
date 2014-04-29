@@ -6,28 +6,28 @@
 
 package edu.spcollege.titanbank.controllers;
 
-import edu.spcollege.titanbank.bll.Account;
-import edu.spcollege.titanbank.bll.Customer;
-import edu.spcollege.titanbank.bll.User;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import edu.spcollege.titanbank.bll.*;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "CheckingServlet", urlPatterns = {"/CheckingServlet"})
-public class CheckingServlet extends HttpServlet {
+@WebServlet(name = "AddUserServlet", urlPatterns = {"/AddUserServlet"})
+public class AddUserServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,17 +42,13 @@ public class CheckingServlet extends HttpServlet {
     private String message = "";
     private String nextView = "";
     private HttpSession session = null;
-    private HttpServletRequest request = null;
     private Boolean loggedIn = false;
-    //
-    private Customer customer;
-    private User user;
+    private int userId = 0;
+    private String userName = "";
+    private String userType = "";
+    private String password = "";
     private int customerId = 0;
-    //
-    private int accountNum = 0;
-    private String accountType = "C";
-    private double balance;
-    private Account checkingaccount;
+    private User user;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
@@ -63,8 +59,8 @@ public class CheckingServlet extends HttpServlet {
         loggedIn = (Boolean) session.getAttribute("loggedIn");
         
         System.out.println("Check if the user entered values");
-        accountType = (String)request.getParameter("accountType");
-        System.out.println("Account Type: "+accountType);
+        userName = (String)request.getParameter("userName");
+        System.out.println("userName: "+userName);
         
         if (loggedIn == null || loggedIn == false) {
             nextView = "/WEB-INF/jsp/welcome.jsp";
@@ -72,40 +68,47 @@ public class CheckingServlet extends HttpServlet {
             RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
             dispatcher.forward(request,response);        
         }
-        else {
-            user = (User) session.getAttribute("user");
-            customerId = user.getCustomerId();
-            System.out.println("Customer Id from User object: "+customerId);
+        else if (userName != null) {
+            System.out.println("Add new user");
+            this.userName = request.getParameter("userName");
+            this.userType = request.getParameter("userType");
+            this.password = request.getParameter("password");
+            this.customerId  = Integer.parseInt(request.getParameter("customerSelect"));
             
-            // Get the account data
-            checkingaccount = new Account(customerId, "C");
-            if (checkingaccount.getIsFound()) {
-                balance = checkingaccount.getBalance();
-                System.out.println("Customer Id: "+customerId+", " + "Balance: "+balance);
+            System.out.println("Create user object");
+            user = new User();
+            System.out.println("Call insertUser");
+            userId = user.insertUser(userName, userType, password, customerId);
+            
+            if (this.userId > 0) {
+                message = "User " + this.userId + " has been succesfully added.";
             }
             else {
-                message = "Account not found";
-                request.setAttribute("message", message);
+                message = "Error, user not added";
             }
+            request.setAttribute("message", message);
+            // Display the page again
+            CustomerList customerList = new CustomerList();
+            List<PersonName> personList = null;
+            personList = customerList.queryCustomerList();
+            request.setAttribute("personList", personList);
             
-            setAccount(request, checkingaccount);
-            
-            // Display the page
-            nextView = "/WEB-INF/jsp/viewaccount.jsp";
+            nextView = "/WEB-INF/jsp/adduser.jsp";
             ServletContext context = getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
-            dispatcher.forward(request,response);
+            dispatcher.forward(request,response);     
         }
-
-    }
-    
-    private void setAccount(HttpServletRequest request, Account account) {
-        request.setAttribute("accountNum", account.getAccountNum());
-        System.out.println("Set AccountNum: "+account.getAccountNum());
-        System.out.println("Set AccountNum 2: "+ (Integer)request.getAttribute("accountNum"));
-        request.setAttribute("accountType", account.getAccountType());
-        request.setAttribute("customerId", account.getCustomerId());
-        request.setAttribute("balance", account.getBalance());
+        else{
+            CustomerList customerList = new CustomerList();
+            List<PersonName> personList = null;
+            personList = customerList.queryCustomerList();
+            request.setAttribute("personList", personList);
+            
+            nextView = "/WEB-INF/jsp/adduser.jsp";
+            ServletContext context = getServletContext();
+            RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
+            dispatcher.forward(request,response);        
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -123,9 +126,9 @@ public class CheckingServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(CheckingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddUserServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CheckingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddUserServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -143,9 +146,9 @@ public class CheckingServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(CheckingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddUserServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CheckingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddUserServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

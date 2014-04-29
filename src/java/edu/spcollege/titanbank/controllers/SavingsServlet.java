@@ -17,6 +17,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import edu.spcollege.titanbank.bll.*;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author admin
@@ -34,23 +39,73 @@ public class SavingsServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     
-    private String userid;
-    private UserLoginStatus userLoginStatus;
+    private String message = "";
+    private String nextView = "";
+    private HttpSession session = null;
+    private HttpServletRequest request = null;
+    private Boolean loggedIn = false;
+    //
+    private Customer customer;
+    private User user;
+    private int customerId = 0;
+    //
+    private int accountNum = 0;
+    private String accountType = "S";
+    private double balance;
+    private Account savingsaccount;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
 
-        // Verify login
-        userid = "cop2806";
-        userLoginStatus = new UserLoginStatus(userid);        
-        if (userLoginStatus.isLoggedIn(userid)) { 
-            String nextView = "/WEB-INF/jsp/viewsavings.jsp" ;
+        // Verify that the user is logged in
+        session = request.getSession();
+        loggedIn = (Boolean) session.getAttribute("loggedIn");
+        
+        System.out.println("Check if the user entered values");
+        accountType = (String)request.getParameter("accountType");
+        System.out.println("Account Type: "+accountType);
+        
+        if (loggedIn == null || loggedIn == false) {
+            nextView = "/WEB-INF/jsp/welcome.jsp";
             ServletContext context = getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
-            dispatcher.forward(request ,response);
+            dispatcher.forward(request,response);        
+        }
+        else {
+            user = (User) session.getAttribute("user");
+            customerId = user.getCustomerId();
+            System.out.println("Customer Id from User object: "+customerId);
+            
+            // Get the account data
+            savingsaccount = new Account(customerId, "S");
+            if (savingsaccount.getIsFound()) {
+                balance = savingsaccount.getBalance();
+                System.out.println("Customer Id: "+customerId+", " + "Balance: "+balance);
+            }
+            else {
+                message = "Account not found";
+                request.setAttribute("message", message);
+            }
+            
+            setAccount(request, savingsaccount);
+            
+            // Display the page
+            nextView = "/WEB-INF/jsp/viewaccount.jsp";
+            ServletContext context = getServletContext();
+            RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
+            dispatcher.forward(request,response);
         }
 
+    }
+    
+    private void setAccount(HttpServletRequest request, Account account) {
+        request.setAttribute("accountNum", account.getAccountNum());
+        System.out.println("Set AccountNum: "+account.getAccountNum());
+        System.out.println("Set AccountNum 2: "+ (Integer)request.getAttribute("accountNum"));
+        request.setAttribute("accountType", account.getAccountType());
+        request.setAttribute("customerId", account.getCustomerId());
+        request.setAttribute("balance", account.getBalance());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,10 +117,17 @@ public class SavingsServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(SavingsServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SavingsServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -79,7 +141,13 @@ public class SavingsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(SavingsServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SavingsServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

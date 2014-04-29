@@ -6,11 +6,14 @@
 
 package edu.spcollege.titanbank.controllers;
 
-import edu.spcollege.titanbank.bll.Account;
-import edu.spcollege.titanbank.bll.Customer;
-import edu.spcollege.titanbank.bll.User;
+
+import edu.spcollege.titanbank.bll.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -24,10 +27,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author admin
+ * @author rmeijer
  */
-@WebServlet(name = "CheckingServlet", urlPatterns = {"/CheckingServlet"})
-public class CheckingServlet extends HttpServlet {
+@WebServlet(name = "TansferListServlet", urlPatterns = {"/TansferListServlet"})
+public class TransferListServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,29 +45,35 @@ public class CheckingServlet extends HttpServlet {
     private String message = "";
     private String nextView = "";
     private HttpSession session = null;
-    private HttpServletRequest request = null;
     private Boolean loggedIn = false;
     //
-    private Customer customer;
-    private User user;
+    private User user = null;
+    private Customer customer = null;
     private int customerId = 0;
+    private Transfer transfer = null;
+    private String transferStatus = "";
+    private String selectedTransferStatus = "";
+    private List<Transfer> transferList = null;
+    private boolean isFound = false;
     //
-    private int accountNum = 0;
-    private String accountType = "C";
-    private double balance;
-    private Account checkingaccount;
+    String jspPattern = "MM/dd/yyyy";
+    SimpleDateFormat jspDateFormat = new SimpleDateFormat(jspPattern);
+    String mysqlPattern = "yyyy-MM-dd";
+    SimpleDateFormat mysqlDateFormat = new SimpleDateFormat(mysqlPattern);
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
         // Verify that the user is logged in
         session = request.getSession();
         loggedIn = (Boolean) session.getAttribute("loggedIn");
-        
-        System.out.println("Check if the user entered values");
-        accountType = (String)request.getParameter("accountType");
-        System.out.println("Account Type: "+accountType);
+                
+        System.out.println("Get the customer id from the session...");
+        //customerId  = (Integer)session.getAttribute("customerId");
+        user = (User)session.getAttribute("user");
+        customerId = user.getCustomerId();
+        System.out.println("Transfer list customer id: "+customerId);
         
         if (loggedIn == null || loggedIn == false) {
             nextView = "/WEB-INF/jsp/welcome.jsp";
@@ -73,39 +82,37 @@ public class CheckingServlet extends HttpServlet {
             dispatcher.forward(request,response);        
         }
         else {
-            user = (User) session.getAttribute("user");
-            customerId = user.getCustomerId();
-            System.out.println("Customer Id from User object: "+customerId);
-            
-            // Get the account data
-            checkingaccount = new Account(customerId, "C");
-            if (checkingaccount.getIsFound()) {
-                balance = checkingaccount.getBalance();
-                System.out.println("Customer Id: "+customerId+", " + "Balance: "+balance);
+            System.out.println("Get transfer status...");
+            if (request.getParameter("transferStatus") == null) {
+                System.out.println("No transfer status selected, default to all.");
             }
             else {
-                message = "Account not found";
-                request.setAttribute("message", message);
+                transferStatus = request.getParameter("transferStatus");
+                request.setAttribute("selectedTransferStatus", transferStatus);
+                System.out.println("Got transfer status: "+transferStatus);
             }
+                
+            System.out.println("Create transfer object: "+customerId);
+            Transfer transfer = new Transfer();
+            isFound = transfer.queryTransferList(customerId, transferStatus);
             
-            setAccount(request, checkingaccount);
+            if (isFound) {
+                System.out.println("Get transfer list...");
+                transferList = transfer.getTransferList();
+                System.out.println("Transfer list customerId: "+transferList.get(1).getCustomerId());
+                request.setAttribute("transferList", transferList);
+            }
+            else {
+                message = "No transfers found";
+            }
+            request.setAttribute("message", message);
             
-            // Display the page
-            nextView = "/WEB-INF/jsp/viewaccount.jsp";
+            nextView = "/WEB-INF/jsp/transferlist.jsp";
+            System.out.println("Display page: "+nextView);
             ServletContext context = getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
-            dispatcher.forward(request,response);
+            dispatcher.forward(request,response);        
         }
-
-    }
-    
-    private void setAccount(HttpServletRequest request, Account account) {
-        request.setAttribute("accountNum", account.getAccountNum());
-        System.out.println("Set AccountNum: "+account.getAccountNum());
-        System.out.println("Set AccountNum 2: "+ (Integer)request.getAttribute("accountNum"));
-        request.setAttribute("accountType", account.getAccountType());
-        request.setAttribute("customerId", account.getCustomerId());
-        request.setAttribute("balance", account.getBalance());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -123,9 +130,9 @@ public class CheckingServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(CheckingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TransferListServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CheckingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TransferListServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -143,9 +150,9 @@ public class CheckingServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(CheckingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TransferListServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CheckingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TransferListServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

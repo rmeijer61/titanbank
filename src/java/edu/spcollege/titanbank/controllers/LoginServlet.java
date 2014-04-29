@@ -6,12 +6,11 @@
 
 package edu.spcollege.titanbank.controllers;
 
-
 import edu.spcollege.titanbank.bll.*;
 import java.io.IOException;
-import java.io.PrintWriter;
-import static java.lang.System.out;
-import java.text.DecimalFormat;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -43,21 +42,31 @@ public class LoginServlet extends HttpServlet {
     String nextView = "";
         
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String userid = request.getParameter("userid");
-        String password = request.getParameter("password");
+        String userName = request.getParameter("userName");
         String userType = request.getParameter("userType");
-
-        AuthenticationService auth = new AuthenticationService(userid, password);
+        String password = request.getParameter("password");
+ 
+        AuthenticationService auth = new AuthenticationService(userName, userType, password);
         if (auth.isAuthenticated()) {
                         
             // Store the User object in the session
             HttpSession session = request.getSession();
             session.setAttribute("loggedIn",true);
-            User user = new User();
+            session.setAttribute("userName",userName);
+            User user = auth.getUser();
             session.setAttribute("user",user);
+            System.out.println("Update session with customer id: "+user.getCustomerId());
+            session.setAttribute("customerId",user.getCustomerId());
+            
+            Customer customer = new Customer(user.getCustomerId());
+            Person person = new Person(customer.getPersonId());
+            // TODO - The next view is the index
+            request.setAttribute("lastName",person.getLastName());
+            request.setAttribute("firstName",person.getFirstName());
+            request.setAttribute("customerId",user.getCustomerId());
             
             message = "You are logged in.";
             request.setAttribute("message",message);
@@ -65,10 +74,10 @@ public class LoginServlet extends HttpServlet {
              
             // What type of user?
             switch (userType) {
-                case "EMPLOYEE":
+                case "E":
                     nextView = "/WEB-INF/jsp/index2.jsp" ;
                     break;
-                case "CUSTOMER":
+                case "C":
                     nextView = "/WEB-INF/jsp/index.jsp" ;
                     break;
                 default:
@@ -106,7 +115,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -120,7 +135,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

@@ -9,7 +9,6 @@ package edu.spcollege.titanbank.controllers;
 import edu.spcollege.titanbank.bll.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,9 +65,6 @@ public class ViewCustomerListServlet extends HttpServlet {
             personList = customerList.queryCustomerList();
             request.setAttribute("personList", personList);
             
-            //ArrayList resultSet = (ArrayList) customerList.queryCustomerList();
-            //request.setAttribute("resultSet", resultSet);
-                        
             nextView = "/WEB-INF/jsp/viewcustomerlist.jsp";
             ServletContext context = getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);

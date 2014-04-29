@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.spcollege.titanbank.bll.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author admin
@@ -31,21 +32,31 @@ public class AccountSummaryServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     
-    private String userid;
-    private UserLoginStatus userLoginStatus;
+    private String message = "";
+    private String nextView = "";
+    private HttpSession session = null;
+    private Boolean loggedIn = false;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        // Verify login
-        userid = "cop2806";
-        userLoginStatus = new UserLoginStatus(userid);        
-        if (userLoginStatus.isLoggedIn(userid)) { 
-            String nextView = "/WEB-INF/jsp/accountsummary.jsp" ;
+
+        // Verify that the user is logged in
+        session = request.getSession();
+        loggedIn = (Boolean) session.getAttribute("loggedIn");
+        
+        if (loggedIn == null || loggedIn == false) {
+            nextView = "/WEB-INF/jsp/welcome.jsp";
             ServletContext context = getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
-            dispatcher.forward(request ,response);
+            dispatcher.forward(request,response);        
+        }
+        else {
+            nextView = "/WEB-INF/jsp/accountsummary.jsp";
+            ServletContext context = getServletContext();
+            RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
+            dispatcher.forward(request,response);
         }
     }
 
