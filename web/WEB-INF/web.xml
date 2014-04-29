@@ -54,13 +54,13 @@
     </servlet-mapping>
     <!-- BankAccount -->
     <servlet>
-        <servlet-name>BankAccountServlet</servlet-name>
-        <servlet-class>edu.spcollege.titanbank.controllers.BankAccountServlet</servlet-class>
+        <servlet-name>AccountServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.AccountServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>BankAccountServlet</servlet-name>
-        <url-pattern>/bankaccount</url-pattern>
+        <servlet-name>AccountServlet</servlet-name>
+        <url-pattern>/account</url-pattern>
     </servlet-mapping>
     <!-- AccountSummary -->
     <servlet>
@@ -94,23 +94,23 @@
     </servlet-mapping>
     <!-- TransferRequest -->
     <servlet>
-        <servlet-name>TransferRequestServlet</servlet-name>
-        <servlet-class>edu.spcollege.titanbank.controllers.TransferRequestServlet</servlet-class>
+        <servlet-name>TransferServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.TransferServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>TransferRequestServlet</servlet-name>
-        <url-pattern>/transferrequest</url-pattern>
+        <servlet-name>TransferServlet</servlet-name>
+        <url-pattern>/transfer</url-pattern>
     </servlet-mapping>
-    <!-- TransferService -->
+    <!-- TransferList -->
     <servlet>
-        <servlet-name>TransferServiceServlet</servlet-name>
-        <servlet-class>edu.spcollege.titanbank.controllers.TransferServiceServlet</servlet-class>
+        <servlet-name>TransferListServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.TransferListServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>TransferServiceServlet</servlet-name>
-        <url-pattern>/transferservice</url-pattern>
+        <servlet-name>TransferListServlet</servlet-name>
+        <url-pattern>/transferlist</url-pattern>
     </servlet-mapping>
     <!-- Customer List -->
     <servlet>
@@ -141,6 +141,16 @@
     <servlet-mapping>
         <servlet-name>ViewCustomerServlet</servlet-name>
         <url-pattern>/viewcustomer</url-pattern>
+    </servlet-mapping>
+    <!-- Add User -->
+    <servlet>
+        <servlet-name>AddUserServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.AddUserServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddUserServlet</servlet-name>
+        <url-pattern>/adduser</url-pattern>
     </servlet-mapping>
     <!-- -->
     <servlet-mapping>
