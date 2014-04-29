@@ -1,96 +1,57 @@
-<%-- 
+<%--
     Document   : accountsummary
     Created on : Apr 12, 2014, 3:06:39 PM
     Author     : rmeijer
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8" 
-        import="edu.spcollege.titanbank.bll.*, java.util.Date, java.util.ArrayList" 
-        errorPage="/WEB-INF/jsp/errorPage.jsp" %>
+        import="edu.spcollege.titanbank.bll.*, java.util.Date" 
+        errorPage="errorPage.jsp" %>
 <% // Verify that the user is logged in
     Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
     if (loggedIn == null || loggedIn.booleanValue() == false) {
 %>
-        <jsp:forward page="/WEB-INF/jsp/welcom.jsp" />
+        <jsp:forward page="welcome.jsp" />
 <%
     }
 %>
-<%! Date today = new Date(); %>
-<jsp:useBean id="user" scope="session" class="edu.spcollege.titanbank.bll.User" />
 
+<%! Date today = new Date(); %>
+ 
 <!DOCTYPE html>
 <html>
-<jsp:include page="/WEB-INF/jsp/stdhead.jsp" />    
+<jsp:include page="/WEB-INF/jsp/stdhead.jsp" />   
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Titan Bank - Summary of Accounts</title>
 </head>
 <body class="contentBody">
-<div>
-    <span><jsp:getProperty name="user"
-               property="firstName" />
-    </span>
-    <span><jsp:getProperty name="user"
-               property="lastName" />
-    </span>
-    <span>&nbsp;&nbsp;Logged in at&nbsp <%= today %></span>
-</div>
+
 <div class="contentWrapper">
 <div class="content_2col_heading">
-    <h3>Summary of Accounts</h3>
+    <h3>About Your Accounts</h3>
 </div>   
 
 <div class="summaryBox">
     <div class="summaryBoxTitle">
-        <span>Savings Account Summary</span>
+        <span>Savings Account</span>
     </div>
-    <div class="summaryBoxHeading">
-        <div class="summaryBox_c1">
-            <span></span>
+    <div>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. 
         </div>
-        <div class="summaryBox_c2">
-            <span>Amount</span>
-        </div>
-    </div>    
-
-    <div class="summaryBoxTotal">
-        <div class="summaryBoxDetail_r1">        
-            <div class="summaryBox_c1_detail">
-                <span>Money Market Savings</span>
-            </div>
-            <div id="summaryBoxDetail_savingsTotal" class="summaryBox_c2_detail">
-                <span>$0.00</span>
-            </div>
-        </div>
-    </div>
-    
 </div>
 
 <div class="summaryBox">
     <div class="summaryBoxTitle">
-        <span>Checking Account Summary</span>
+        <span>Checking Account</span>
     </div>
-    <div class="summaryBoxHeading">
-        <div class="summaryBox_c1">
-            <span></span>
-        </div>
-        <div class="summaryBox_c2">
-            <span>Amount</span>
-        </div>
-    </div>    
-
-    <div class="summaryBoxTotal">
-        <div class="summaryBoxDetail_r1">        
-            <div class="summaryBox_c1_detail">
-                <span>Classic Interest Checking</span>
-            </div>
-            <div id="summaryBoxDetail_checkingTotal" class="summaryBox_c2_detail">
-                <span>$0.00</span>
-            </div>
-        </div>
+    <div>
+        Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles. Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. 
     </div>
     
 </div>    
     
 </div> <!-- End wrapper -->
 </body>
+</html>
