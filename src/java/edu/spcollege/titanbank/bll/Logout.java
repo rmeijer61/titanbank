@@ -17,7 +17,7 @@ public class Logout {
         // Note: simulation
  
         UserLoginStatus userLoginStatus = new UserLoginStatus(user);
-        if (userLoginStatus.isLoggedIn(user.getUserid())) {
+        if (userLoginStatus.isLoggedIn(user.getUserName())) {
             userLoginStatus.removeUserLoginActivity(user);
              // Do other logout stuff
             this.isRemoved = true;

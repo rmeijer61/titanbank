@@ -43,12 +43,6 @@ public class DBPerson {
     private final String mysqlPattern = "yyyy-mm-dd";
     private final SimpleDateFormat mysqlDateFormat = new SimpleDateFormat(mysqlPattern);
   
-    // Note: The person id is stored with the userid
-    //public Person(int id) throws SQLException, ClassNotFoundException {
-    //    this.personId = id;
-    //    queryResult = queryPerson(personId);    
-    //}
-
     public int insertPerson(Person person) throws SQLException {
         String mysqlPattern = "yyyy-mm-dd";
         SimpleDateFormat mysqlDateFormat = new SimpleDateFormat(mysqlPattern);
@@ -77,9 +71,6 @@ public class DBPerson {
             + ",'" + person.getPhone1() + "'"    
             + ")";
         
-        //DBUpdate dbupdate = new DBUpdate();
-        //result = dbupdate.doUpdate(sqlStatement);
-                
         // Insert a new row, 
         dbconnect = new DBConnect();     
         if (dbconnect.getConn() != null) {

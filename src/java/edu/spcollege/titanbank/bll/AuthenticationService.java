@@ -6,6 +6,7 @@
 
 package edu.spcollege.titanbank.bll;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -16,31 +17,35 @@ import java.util.ArrayList;
  * the user login activity
  */
 public class AuthenticationService {
-    private boolean authenticated = false;
-    private User userid;
-    private String customerId = "";
+    private boolean isAuthenticated = false;
+    private User user;
+    private String userName;
+    private int customerId = 0;
     private ArrayList<UserLoginStatus> loggedIn;
     
-    public AuthenticationService(String lookupUserid, String lookupPassword) {
-        try {
-            // Note: For best practice security, the password is separate
-            userid = new User(lookupUserid, lookupPassword);
-            this.authenticated = userid.isAuthenticated();
-            // TODO - The customer id is accessed via the Userid object
-            this.customerId = userid.getCustomerId();
-            updateUserLoginActivity(userid);
-        }
-        catch (UserNotFoundException ex) {
+    public AuthenticationService(String userName, String userType, String password) throws SQLException, ClassNotFoundException {
+        this.user = new User(userName, userType, password);
+        this.isAuthenticated = user.queryUser(userName, userType, password);
+
+        // The customer id is accessed via the User object
+        this.customerId = user.getCustomerId();
+        
+        //updateUserLoginActivity(user);
+        //}
+        //catch (UserNotFoundException ex) {
             // TODO
-        }
+        //}
     }
     
     public boolean isAuthenticated() {
-        return this.authenticated;
+        return this.isAuthenticated;
     }
     
-    public String getCustomerId() {
-        return userid.getCustomerId();
+    public int getCustomerId() {
+        return this.customerId;
+    }
+    public User getUser() {
+        return this.user;
     }
     
     private void updateUserLoginActivity(User userid) {

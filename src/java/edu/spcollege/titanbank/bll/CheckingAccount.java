@@ -12,7 +12,7 @@ import java.sql.SQLException;
  *
  * @author admin
  */
-public class CheckingAccount extends BankAccount {
+public class CheckingAccount extends Account {
     // Test balances
     private double beginBalance = 0.0;
     private String beginBalanceFormatted;

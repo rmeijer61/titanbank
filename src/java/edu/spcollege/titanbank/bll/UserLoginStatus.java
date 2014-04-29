@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class UserLoginStatus {
     private User user;
-    private String userid = "";
+    private String userName = "";
     private final java.util.Date loginDate = new java.util.Date();
     
     // loggedIn will contain logins for a particular user, not all users
@@ -23,12 +23,12 @@ public class UserLoginStatus {
     private ArrayList<UserLoginStatus> loggedIn;
     
     public UserLoginStatus(User user) {
-        this.userid = user.getUserid();
+        this.userName = user.getUserName();
     }
     
     // Method for checking the login status
     public UserLoginStatus(String userid) {
-        this.userid = userid;
+        this.userName = userid;
     }
     
     public java.util.Date getLoginDate() {
@@ -46,19 +46,19 @@ public class UserLoginStatus {
         this.loggedIn = new ArrayList<>();
         
         // Find the user login(s)
-        find(user.getUserid());
+        find(user.getUserName());
         
         // Remove the logins from the database
         for(UserLoginStatus ula: loggedIn){
-            if (ula.getUserid().equals(userid)) {
+            if (ula.getUserName().equals(userName)) {
                 // Remove the login from the database
             }
         }
         return true;
     }
     
-    public String getUserid() {
-        return userid;
+    public String getUserName() {
+        return userName;
     }
     
     public boolean isLoggedIn(String userid){
@@ -73,7 +73,7 @@ public class UserLoginStatus {
         // Multiple login attempts?
 
         for(UserLoginStatus ula: loggedIn){
-            if (ula.getUserid().equals(userid))
+            if (ula.getUserName().equals(userName))
                 return loggedIn;
         }
         return loggedIn;

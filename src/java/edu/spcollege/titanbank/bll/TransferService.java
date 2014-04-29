@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public class TransferService implements Serializable {
     
-    ArrayList<TransferRequest> transactions;
+    ArrayList<Transfer> transactions;
     String transferStatus;
     
     public TransferService(){
@@ -17,8 +17,8 @@ public class TransferService implements Serializable {
         transferStatus = "";
     }
     
-    public void transfer(TransferRequest request) {
-        if(request.getWhenTo() == TransferRequest.ScheduleType.FUTURE)
+    public void transfer(Transfer request) {
+        if(request.getWhenTo() == Transfer.ScheduleType.FUTURE)
             transactions.add(request);
         else{
             try {
@@ -32,9 +32,9 @@ public class TransferService implements Serializable {
         }
     }
     
-    public List getTransactions(TransferRequest.TransferStatus status){
-        ArrayList<TransferRequest> results = new ArrayList<>();
-        for(TransferRequest request: transactions){
+    public List getTransactions(Transfer.TransferStatus status){
+        ArrayList<Transfer> results = new ArrayList<>();
+        for(Transfer request: transactions){
             if(request.getStatus() == status)
                 results.add(request);
         }
@@ -47,8 +47,8 @@ public class TransferService implements Serializable {
     
         
     public List getTransactions(String transferStatus){
-        ArrayList<TransferRequest> results = new ArrayList<>();
-        for(TransferRequest request: transactions){
+        ArrayList<Transfer> results = new ArrayList<>();
+        for(Transfer request: transactions){
             if(request.getTransferStatus() == transferStatus)
                 results.add(request);
         }

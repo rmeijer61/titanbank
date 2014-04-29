@@ -7,63 +7,75 @@
 package edu.spcollege.titanbank.bll;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
 /**
  *
  * @author rmeijer
  */
 public class User implements Serializable{
-    private final String userid = "cop2806";
-    Password password;
-    private final String lookupUserid;
-    private final String customerId;
-    private final String firstName = "Rick";
-    private final String lastName = "Meijer";
-    boolean authenticated = false;
+    private int userId = 0;
+    private String userName = "";
+    private String userType = "";
+    private String password = "";
+    private int customerId = 0;
+    boolean isAuthenticated = false;
     
     public User() {
-        // For simulation
-        this.lookupUserid = "cop2806";
-        this.customerId = "1234";
+        this.userId = 0;
+        this.userName = "";
+        this.userType = "";
+        this.password = "";
+        this.customerId = 0;
+    }
+
+    public User(String userName, String userType, String password) throws SQLException, ClassNotFoundException {
+        queryUser(userName, userType, password);
     }
     
-    public User(String userid, String lookupPassword) throws UserNotFoundException {
-        this.lookupUserid = userid;
-        // Query the userid
+    public int insertUser(String userName, String userType, String password, int customerId) throws SQLException {
+        this.userName = userName;
+        this.userType = userType;
+        this.password = password;
+        this.customerId = customerId;
+        System.out.println("Create DBUser");
+        DBUser dbuser = new DBUser();
+        System.out.println("Call DBUser.insertUser");
+        this.userId = dbuser.insertUser(this);
         
-        // TODO - Query - customerid stored with the userid
-        customerId = "1234";
+        return userId;
+    }
+    
+    public boolean queryUser(String userName, String userType, String password) throws SQLException, ClassNotFoundException {
+        DBUser dbuser = new DBUser();
+        dbuser.queryUser(userName, userType, password);
         
-        if (this.userid.equals(userid)) {
-            try {
-                // For best practice, the password is separate
-                password = new Password(lookupPassword);
-                this.authenticated = password.isValidPassword();
-                // TODO - Customer id
-                
-            }
-            catch (InvalidPasswordException ex) {
-                // TODO
-            }
-        }
+        this.userId = dbuser.getUserId();
+        this.userName = dbuser.getUserName();
+        this.userType = dbuser.getUserType();
+        this.password = getPassword();
+        this.customerId = dbuser.getCustomerId();
+        this.isAuthenticated = dbuser.getIsAuthenticated();
+        return this.isAuthenticated;
     }
     
-    public boolean isAuthenticated() {
-        return authenticated;
+    // Getters and Setters
+    public int getUserId() {
+        return this.userId;
     }
-    
-    public String getUserid() {
-        return this.userid;
+    public String getUserName() {
+        return this.userName;
     }
-    
-    public String getCustomerId() {
+    public String getUserType() {
+        return this.userType;
+    }
+    public String getPassword() {
+        return this.password;    
+    }
+    public int getCustomerId() {
         return this.customerId;
     }
-    
-    public String getFirstName() {
-        return this.firstName;
-    }
-    public String getLastName() {
-        return this.lastName;
+    public boolean getIsAuthenticated() {
+        return this.isAuthenticated;
     }
 }    
