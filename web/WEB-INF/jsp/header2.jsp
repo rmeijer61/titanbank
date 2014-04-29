@@ -50,6 +50,8 @@
                 <li class="navsubli"><a href="viewcustomer" target="main_content_iframe">View Customer</a></li>
 	        <li class="navsubli"><a href="addcustomer" target="main_content_iframe">Add Customer</a></li>
 		<li class="navsubli"><a href="cancelcustomer" target="main_content_iframe">Cancel Customer</a></li>
+                <li class="navsubli"><a href="account" target="main_content_iframe">Add Account</a></li>
+                <li class="navsubli"><a href="adduser" target="main_content_iframe">Add User</a></li>
             </ul>
         </li>
         <li><a>Manage Customer Checks</a>

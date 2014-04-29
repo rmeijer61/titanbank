@@ -138,7 +138,7 @@
                     <label class="content_form_label" for="country">Country: </label>
                 </div>
                 <div class="content_form_2col_r1_c2">
-	            <select required id="country" name="country" onchange="populateState()" value="<%= country %>"> 
+	            <select required id="country" name="country" onchange="populateState()"> 
                         <option><%= country %></option>
                     </select>
 	        </div>
@@ -148,7 +148,7 @@
                     <label class="content_form_label" for="state">State: </label>
                 </div>
                 <div class="content_form_2col_r1_c2">
-	            <select id="state" name="state" value="<%= state %>">
+	            <select id="state" name="state">
 		        <option><%= state %></option>
                     </select>
 		    <script type="text/javascript">initCountry(); </script>

@@ -11,6 +11,7 @@
 <%
     }
 %>
+<%@include file="initlogininfo.jsp" %> 
 <%! Date today = new Date(); %>
 
 <!doctype html>
@@ -24,7 +25,12 @@
 
 <!-- *** MAIN SECTION *** -->
 <div id="main">
-
+<div>
+    <span><%= firstName %>&nbsp;</span>
+    <span><%= lastName %>&nbsp;</span>
+    <span><%= "Customer Id: " + customerId %></span>
+    <span>&nbsp;&nbsp;Logged in at&nbsp <%= today %></span>
+</div>
 <div id="main_content">
     <iframe id="main_content_iframe" name="main_content_iframe" src="accountsummary">
     </iframe> 

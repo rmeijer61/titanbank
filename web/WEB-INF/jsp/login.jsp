@@ -34,10 +34,10 @@
         <div>
             <div class="content_form_2col_r1">
                 <div class="content_form_2col_r1_c1">		
-                    <label class="content_form_label" for="userid">Userid: </label>
+                    <label class="content_form_label" for="useName">User Name: </label>
                 </div>
                 <div class="content_form_2col_r1_c2" >
-	            <input type="text" size="30" name="userid" id="userid" />
+	            <input type="text" size="30" name="userName" id="userName" />
 	        </div>
             </div>
             <div class="content_form_2col_r1">
@@ -51,8 +51,8 @@
         <div class="content_form_2col_r1">
             <label class="content_form_2col_r1_c1" for="userType">User type:</label>
             <select id="userType" name="userType">
-                <option value="CUSTOMER">Customer</option>
-                <option value="EMPLOYEE">Employee</option>
+                <option value="C">Customer</option>
+                <option value="E">Employee</option>
             </select>
         </div>            
             <div class="content_form_2col_r1">

@@ -1,7 +1,7 @@
 <%-- 
     Document   : header
     Created on : Apr 11, 2014, 12:06:33 PM
-    Author     : admin
+    Author     : rmeijer
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"
@@ -53,8 +53,8 @@
         </li>
         <li><a>Transfers</a>
             <ul class="level2">
-		<li class="navsubli"><a href="transferrequest" target="main_content_iframe">Schedule Transfer</a></li>
-                <li class="navsubli"><a href="transferservice" target="main_content_iframe">Transfer Activity</a></li>
+		<li class="navsubli"><a href="transfer" target="main_content_iframe">Schedule Transfer</a></li>
+                <li class="navsubli"><a href="transferlist" target="main_content_iframe">Transfer Activity</a></li>
 	    </ul>
         </li>      
         <li><a>Manage Checking</a>
@@ -74,12 +74,6 @@
         <li><a>Settings</a>
             <ul class="level2">
 		<li class="navsubli"><a href="" target="main_content_iframe">Change Password</a></li>
-            </ul>
-        </li>
-        <li><a>Administrator</a>
-            <ul class="level2">
-		<li class="navsubli"><a href="" target="main_content_iframe">Customer Maintenance</a></li>
-                <li class="navsubli"><a href="" target="main_content_iframe">Check Maintenance</a></li>
             </ul>
         </li>
         <li><a style="border-right:none">Contact Us</a>
