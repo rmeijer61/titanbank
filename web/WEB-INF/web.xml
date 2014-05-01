@@ -142,6 +142,16 @@
         <servlet-name>ViewCustomerServlet</servlet-name>
         <url-pattern>/viewcustomer</url-pattern>
     </servlet-mapping>
+    <!-- Update Customer -->
+    <servlet>
+        <servlet-name>UpdateCustomerServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.UpdateCustomerServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateCustomerServlet</servlet-name>
+        <url-pattern>/updatecustomer</url-pattern>
+    </servlet-mapping>
     <!-- Add User -->
     <servlet>
         <servlet-name>AddUserServlet</servlet-name>
