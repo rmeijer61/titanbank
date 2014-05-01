@@ -94,7 +94,7 @@ public class LoginServlet extends HttpServlet {
         }
         else {
             message = "Sorry, Incorrect Password, Try Again";
-            request.setAttribute("errorMessage",message);
+            request.setAttribute("message",message);
             nextView = "/WEB-INF/jsp/welcome.jsp" ;
             ServletContext context = getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);

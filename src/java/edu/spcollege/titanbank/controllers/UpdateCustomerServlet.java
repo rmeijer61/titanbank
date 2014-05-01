@@ -6,8 +6,14 @@
 
 package edu.spcollege.titanbank.controllers;
 
-import edu.spcollege.titanbank.bll.*;
 import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import edu.spcollege.titanbank.bll.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,20 +21,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author admin
+ * @author rmeijer
  */
 
-@WebServlet(name = "AddCustomerServlet", urlPatterns = {"/AddCustomerServlet"})
-public class AddCustomerServlet extends HttpServlet {
+@WebServlet(name = "UpdateCustomerServlet", urlPatterns = {"/UpdateCustomerServlet"})
+public class UpdateCustomerServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,7 +40,7 @@ public class AddCustomerServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
+    
     private String message;
     private String nextView;
     private HttpSession session;
@@ -66,16 +67,18 @@ public class AddCustomerServlet extends HttpServlet {
     private String emailAddress = "";
     private String phone1 = "";
     private String status = "";
+    private boolean cancelCustomer = false;
     
     String jspPattern = "MM/dd/yyyy";
     SimpleDateFormat jspDateFormat = new SimpleDateFormat(jspPattern);
     String mysqlPattern = "yyyy-mm-dd";
     SimpleDateFormat mysqlDateFormat = new SimpleDateFormat(mysqlPattern);
     
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
- 
+         
         // Verify that the user is logged in
         session = request.getSession();
         loggedIn = (Boolean) session.getAttribute("loggedIn");
@@ -87,57 +90,41 @@ public class AddCustomerServlet extends HttpServlet {
             RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
             dispatcher.forward(request ,response);        
         }
-        else if (request.getParameter("personSelect") != null) {
-            // UPDATE - Customer selected from the drop down list
-            personId = Integer.parseInt(request.getParameter("personSelect"));
-            this.person = new Person(personId);
-            setValues(request);
-            // 
-            nextView = "/WEB-INF/jsp/person.jsp" ;
+        else {
+            // Update customer
+            System.out.println("Process customer update");
+
+            // Get the customer object from the session
+            customer = (Customer)session.getAttribute("customer");
+            System.out.println("customer.customerId: " + customer.getCustomerId());
+            
+            // Update the values in the customer object with the JSP values
+            
+            String cancelCustomerString = (String) request.getParameter("cancelCustomer");
+            this.cancelCustomer = Boolean.parseBoolean(cancelCustomerString);
+            buildCustomer();
+            System.out.println("Customer status: "+this.status);
+
+            // Update the customer
+            customer.updateCustomer(customer);
+                    
+            // Get the person object from the session 
+            //person = (Person)session.getAttribute("person");
+            // Update the values in the person object with the JSP values
+            //buildPerson();
+            //Update the person
+            //person.updatePerson(person);
+                    
+            message = "Customer has been updated: "+customerId ;
+
+            request.setAttribute("message",message);
+            nextView = "/WEB-INF/jsp/updateperson.jsp" ;
             ServletContext context = getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
             dispatcher.forward(request,response);
         }
-        else if (request.getParameter("lastName") != null) {
-            // INSERT - new person
-            System.out.println("Process person insert");
-            if (validateInput(request)) {
-                System.out.println("Process person insert 2");
-                person = buildPerson();
-                if (updatePerson(person, "INSERT")) {
-                    System.out.println("Process person insert 3");
-                    
-                    // Insert customer row
-                    customer = new Customer();
-                    // Supply a person id
-                    this.customerId = customer.insertCustomer("personId",personId);
-                    
-                    message = "Customer has been added: "+customerId ;
-                }
-                else {
-                    message = "Error adding person";
-                }
-                request.setAttribute("message",message);
-                nextView = "/WEB-INF/jsp/person.jsp" ;
-                ServletContext context = getServletContext();
-                RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
-                dispatcher.forward(request,response);
-            }
-            else {
-                nextView = "/WEB-INF/jsp/person.jsp" ;
-                ServletContext context = getServletContext();
-                RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
-                dispatcher.forward(request,response);
-            }
-        }
-        else {
-            nextView = "/WEB-INF/jsp/person.jsp" ;
-            ServletContext context = getServletContext();
-            RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
-            dispatcher.forward(request,response);        
-        }
-        
     }
+    
     private boolean validateInput(HttpServletRequest request) {
         boolean validInput = false;
         System.out.println("Validate");
@@ -172,11 +159,23 @@ public class AddCustomerServlet extends HttpServlet {
         validInput = true;
         return validInput;
     }
+    private void buildCustomer() {
+        // Create a person object from JSP values
+        System.out.println("Build customer from JSP...");
+        if (this.cancelCustomer) {
+            this.status = "CANCEL";
+            customer.setStatus(this.status);
+        }
+        else {
+            this.status = "ACTIVE";
+            customer.setStatus(this.status);
+        }
+        System.out.println("Build customer from JSP done. Ststus: "+this.status);
+    }
     
-    private Person buildPerson() {
+    private void buildPerson() {
         // Create a person object from JSP values
         System.out.println("Build person from JSP");
-        Person person = new Person();
         person.setPrefixTitle(this.prefixTitle);
         person.setLastName(this.lastName);
         person.setFirstName(this.firstName);
@@ -192,47 +191,8 @@ public class AddCustomerServlet extends HttpServlet {
         person.setPostalCode(this.postalCode);
         person.setEmailAddress(this.emailAddress);
         person.setPhone1(this.phone1);
-        return person;
     }
     
-    private boolean updatePerson(Person person, String DMLType) throws SQLException {
-        switch (DMLType) {
-            case "INSERT":
-                personId = person.insertPerson();
-                break;
-            case "UPDATE":
-                break;
-            case "DELETE":
-                break;
-            default:
-                System.out.println("Unknown DML operation");
-                break;
-        }
-        
-        return true;
-    }
-    
-    private boolean setValues(HttpServletRequest request) {
-        
-        request.setAttribute("personId",String.valueOf(person.getPersonId()));
-        request.setAttribute("prefixTitle",person.getPrefixTitle());
-        request.setAttribute("lastName",person.getLastName());
-        request.setAttribute("firstName",person.getFirstName());
-        request.setAttribute("middleName",person.getMiddleName());
-        request.setAttribute("birthDate",jspDateFormat.format(person.getBirthDate()));
-        request.setAttribute("gender",person.getGender());
-        request.setAttribute("suffix",person.getSuffix());
-        request.setAttribute("address1",person.getAddress1());
-        request.setAttribute("address2",person.getAddress2());
-        request.setAttribute("city",person.getCity());
-        request.setAttribute("state",person.getState());
-        request.setAttribute("country",person.getCountry());
-        request.setAttribute("postalCode",person.getPostalCode());
-        request.setAttribute("emailAddress",person.getEmailAddress());
-        request.setAttribute("phone1",person.getPhone1());
-        return true;
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -248,9 +208,9 @@ public class AddCustomerServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AddCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AddCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -268,9 +228,9 @@ public class AddCustomerServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AddCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AddCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

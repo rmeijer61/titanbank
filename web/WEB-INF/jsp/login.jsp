@@ -26,7 +26,7 @@
     <h3>Login</h3>
 </div>
 
-<span>The user id and password hard-coded into the into classes are "cop2806" and "password" respectively.</span>
+<span>Administrator Password: admin1/password1</span><br />
 <br /><br />
 
 <div class="content_2col_detail"> 
@@ -66,8 +66,8 @@
                 <div class="content_form_2col_r1_c2" >
                     <div id="loginMessage">
                         <% 
-                            if (request.getAttribute("errorMessage") != null) {
-                                out.println(request.getAttribute("errorMessage"));
+                            if (request.getAttribute("message") != null) {
+                                out.println(request.getAttribute("message"));
                             } 
                         %>
 	            </div>

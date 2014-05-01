@@ -41,11 +41,11 @@ public class DBCustomer {
     
     public int insertCustomer(Customer customer) throws SQLException {
         // Build the sql statement
-        status = "INSERT";
+        status = "ACTIVE";
         sqlStatement = "insert into customer (personid,description,status) values ("
                      + customer.getPersonId()
                      + ",'" + customer.getDescription() + "'"
-                     + ",'" + status + "'"
+                     + ",'" + customer.getStatus() + "'"
                      + ")";
         
         // Insert a new customer row, 
@@ -69,6 +69,40 @@ public class DBCustomer {
             System.out.println("Failed to connect to database");
         }
         return customerId;
+    }
+    
+        
+    public void updateCustomer(Customer customer) throws SQLException {
+        // Build the sql statement
+        // The status is the only thing to updte for this project
+        // The customer can be cancelled
+        
+        if (customer.getStatus() != null) {
+            sqlStatement = "update customer "
+                         + " set status = '" + customer.getStatus() + "'"
+                         + " where customerId = " + customer.getCustomerId()
+                         ;
+        
+            dbconnect = new DBConnect();     
+            if (dbconnect.getConn() != null) {
+                try {
+                    conn = dbconnect.getConn();
+                    System.out.println(sqlStatement);
+                    stmt = conn.createStatement();
+                    returnCode = stmt.executeUpdate(sqlStatement);
+                    stmt.close();
+                    customerId = getLastId();
+                    System.out.println("Last id: "+customerId);
+                    conn.close();
+                } catch (SQLException sqlex) {
+                    System.out.println("SQL Exception: "+sqlex);
+                    sqlex.printStackTrace();
+                }
+            }
+            else {
+                System.out.println("Failed to connect to database");
+            }
+        }
     }
     
     public void queryCustomer(int customerId) throws SQLException, ClassNotFoundException {

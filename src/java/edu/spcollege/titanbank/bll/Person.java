@@ -6,13 +6,14 @@
 
 package edu.spcollege.titanbank.bll;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 
 /**
  *
  * @author admin
  */
-public class Person {
+public class Person implements Serializable{
     private int personId = 0;
     private String lastName = "";
     private String firstName = "";

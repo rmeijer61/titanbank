@@ -6,6 +6,7 @@
 
 package edu.spcollege.titanbank.bll;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 
 /**
@@ -14,12 +15,12 @@ import java.sql.SQLException;
  */
 
 
-public class Customer {
+public class Customer implements Serializable{
     private int customerId = 0;
     private int personId = 0;
     private String userId = "";
     private String status = "";
-    private String description = "New customer";
+    private String description = "";
 
     public Customer() {
         this.customerId = 0;
@@ -37,6 +38,8 @@ public class Customer {
         }
         
         DBCustomer dbcustomer = new DBCustomer();
+        this.status = "ACTIVE";
+        this.description = "New customer";
         dbcustomer.insertCustomer(this);
         
         if (dbcustomer.getCustomerId() != 0) {
@@ -48,6 +51,11 @@ public class Customer {
         }
         return customerId;
     }
+         
+    public void updateCustomer(Customer customer) throws SQLException {
+        DBCustomer dbcustomer = new DBCustomer();
+        dbcustomer.updateCustomer(customer);
+    }
     
     public void queryCustomer(int CustomerId) throws SQLException, ClassNotFoundException {
         DBCustomer dbcustomer = new DBCustomer();
@@ -57,6 +65,12 @@ public class Customer {
         this.userId = dbcustomer.getUserId();
         this.description = dbcustomer.getDescription();
         this.status = dbcustomer.getStatus();
+        //
+        System.out.println("Customer.customerId: "+this.customerId);
+        System.out.println("Customer.personId: "+this.personId);
+        System.out.println("Customer.userId: "+this.userId);
+        System.out.println("Customer.description: "+this.description);
+        System.out.println("Customer.status: "+this.status);
     }
     
     public int getCustomerId() {
@@ -73,5 +87,8 @@ public class Customer {
     }
     public String getStatus() {
         return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

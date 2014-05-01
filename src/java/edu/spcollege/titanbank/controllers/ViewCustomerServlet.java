@@ -73,21 +73,27 @@ public class ViewCustomerServlet extends HttpServlet {
             System.out.println("Create object for: "+this.customerId);
                         
             this.customer = new Customer(this.customerId);
+            
+            // Update the session with the customer object
+            session.setAttribute("customer", customer);
+            
             System.out.println("Customer returned personId: "+this.customer.getPersonId());
             
             if (customer.getPersonId() > 0) {
                 person = new Person(customer.getPersonId());
+                // Update the session with the customer object
+                session.setAttribute("person", person);
             }
             
             if (setValues(request, customer, person)) {
-                nextView = "/WEB-INF/jsp/person.jsp";
+                nextView = "/WEB-INF/jsp/updateperson.jsp";
                 ServletContext context = getServletContext();
                 RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
                 dispatcher.forward(request,response);
             }
             else {
                 System.out.println("Error setValues");
-                nextView = "/WEB-INF/jsp/person.jsp";
+                nextView = "/WEB-INF/jsp/updateperson.jsp";
                 ServletContext context = getServletContext();
                 RequestDispatcher dispatcher = context.getRequestDispatcher(nextView);
                 dispatcher.forward(request,response);
@@ -104,11 +110,12 @@ public class ViewCustomerServlet extends HttpServlet {
     
 private boolean setValues(HttpServletRequest request, Customer customer, Person person) {
         System.out.println("Set values for customer: "+customer.getCustomerId());
-        System.out.println("Set values for person: "+person.getPersonId());
-        System.out.println("Set values for person: "+person.getLastName());
+        System.out.println("Set values for person Id: "+person.getPersonId());
+        System.out.println("Set values for person last name: "+person.getLastName());
         
         request.setAttribute("customerId",String.valueOf(customer.getCustomerId()));
         request.setAttribute("personId",String.valueOf(customer.getPersonId()));
+        request.setAttribute("status",customer.getStatus());
         request.setAttribute("prefixTitle",person.getPrefixTitle());
         request.setAttribute("lastName",person.getLastName());
         request.setAttribute("firstName",person.getFirstName());

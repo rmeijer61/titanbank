@@ -1,5 +1,5 @@
 <%-- 
-    Document   : initupdatecustomer
+    Document   : initupdatperson
     Created on : Apr 19, 2014, 4:55:30 PM
     Author     : rmeijer
 --%>
@@ -52,6 +52,6 @@
                ;
  }
  else {
-    headerLine = "<span>New Customer</span>";
+    headerLine = "<span>Select a customer from the customer list</span>";
  }
 %>

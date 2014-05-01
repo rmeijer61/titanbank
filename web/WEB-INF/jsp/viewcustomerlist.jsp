@@ -29,7 +29,7 @@
 </head>
 <body class="contentBody">
 <div id="contentWrapper">
-<h3>View Customers: (For Testing)</h3>
+<h3>View Customers</h3>
 
 <div class="groupBox">
     <form action="viewcustomer" method="post">

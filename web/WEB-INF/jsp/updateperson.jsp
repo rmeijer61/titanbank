@@ -1,5 +1,5 @@
 <%-- 
-    Document   : customer
+    Document   : updateperson
     Created on : Apr 18, 2014, 7:39:17 AM
     Author     : rmeijer
 --%>
@@ -15,7 +15,7 @@
 <%
     }
 %>
-<%@include file="initperson.jsp" %>
+<%@include file="initupdateperson.jsp" %>
 
 <%! Date today = new Date(); %>
 
@@ -33,7 +33,7 @@
     <div>
         <%= headerLine%>
     </div>
-    <form action="addcustomer" method="post">
+    <form action="updatecustomer" method="post">
         <!-- Personal -->
         <div class="groupBox">
             <div class="content_form_2col_r1_300">
@@ -181,6 +181,15 @@
 	        </div>
             </div>
         </div>
+        <!-- Cancel Customer -->
+        <div class="groupBox">
+            <div class="content_form_2col_r1_300">
+                <div>
+                    <input type="checkbox" name="cancelCustomer" value="true">Cancel Customer 
+                </div>
+                <br />
+            </div>
+        </div>        
         <!-- Submit -->
         <div>
             <div class="content_form_2col_r1_300">
@@ -199,7 +208,7 @@
                 <div class="content_form_2col_r1_c1">&nbsp;</div>
                 <div class="content_form_2col_r1_c2">
                     <div class="submitBox10">
-                        <button type="submit">Add Customer</button>
+                        <button type="submit">Update Customer</button>
                         <button onclick="javascript:document.location.reload(true);">Reset</button>
                         <button onclick="index2"/>Exit</button>
                     </div>
