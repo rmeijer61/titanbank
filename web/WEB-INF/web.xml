@@ -152,6 +152,26 @@
         <servlet-name>UpdateCustomerServlet</servlet-name>
         <url-pattern>/updatecustomer</url-pattern>
     </servlet-mapping>
+    <!-- Max S. - Customer change personal info (servlet 1) -->
+    <servlet>
+        <servlet-name>EditInfoLaunchServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.EditInfoLaunchServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditInfoLaunchServlet</servlet-name>
+        <url-pattern>/editinfolaunchservlet</url-pattern>
+    </servlet-mapping>
+    <!-- Max S. - Customer change personal info (servlet 2) -->
+    <servlet>
+        <servlet-name>EditInfoServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.EditInfoServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditInfoServlet</servlet-name>
+        <url-pattern>/editinfoservlet</url-pattern>
+    </servlet-mapping>
     <!-- Add User -->
     <servlet>
         <servlet-name>AddUserServlet</servlet-name>
