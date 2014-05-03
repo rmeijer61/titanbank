@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import edu.spcollege.titanbank.bll.*;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author maxximilianseijo
@@ -32,67 +33,66 @@ public class EditInfoLaunchServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    private HttpSession session;
+    Customer customer;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
             
+            // Get the customer object from the session
+            System.out.println("Get session...");
+            session = request.getSession();
+            System.out.println("Get customerId from session...");
+            int customerId = (int) session.getAttribute("customerId");
+            System.out.println("customerId: " + customerId);
+            System.out.println("Get a customer object...");
+            Customer customer = new Customer(customerId);
             //the person id will likely have to be retrieved as a session attribute
-            int personID = 1;
-            
+            //int personID = 1;
+            int personID = customer.getPersonId();
+            System.out.println("personId: " + personID);           
+
+           
+            System.out.println("Execute dbPersonInfo...");
             dbPersonInfo db = new dbPersonInfo(personID);
+            System.out.println("dbPersonInfo done");
+            
             ResultSet rs = null;
             rs = db.retrieveInfo();
+            String prefixTitle = db.getPrefixTitle();
+            String lastName = db.getLastName();
+            String firstName = db.getFirstName();
+            String middleName = db.getMiddleName();
+            String suffix = db.getSuffix();
+            String address1 = db.getAddress1();
+            String address2 = db.getAddress2();
+            String city = db.getCity();
+            String country = db.getCountry();
+            String state = db.getState();
+            String emailAddress = db.getEmailAddress();
+            String postalCode = db.getPostalCode();
+            String phone1 = db.getPhone1();
             
-            String prefixTitle = "";
-            String lastName = "";
-            String firstName = "";
-            String middleName = "";
-            String suffix = "";
-            String address1 = "";
-            String address2 = "";
-            String city = "";
-            String country = "";
-            String state = "";
-            String emailAddress = "";
-            String postalCode = "";
-            String phone1 = "";
-                
-            while (rs.next()) {
-                    
-            prefixTitle = rs.getString("prefixtitle");
-            lastName = rs.getString("lastname");
-            firstName = rs.getString("firstname");
-            middleName = rs.getString("middlename");
-            suffix = rs.getString("suffix");
-            address1 = rs.getString("address1");
-            city = rs.getString("city");
-            country = rs.getString("country");
-            address2 = rs.getString("address2");
-            state = rs.getString("state");
-            emailAddress = rs.getString("emailaddress");
-            postalCode = rs.getString("postalcode");
-            phone1 = rs.getString("phone1");
- 
-            }
-                request.setAttribute("prefextitle", prefixTitle);
-                request.setAttribute("lastname", lastName);
-                request.setAttribute("firstname", firstName);
-                request.setAttribute("middlename", middleName);
-                request.setAttribute("suffix", suffix);
-                request.setAttribute("address1", address1);
-                request.setAttribute("city", city);
-                request.setAttribute("country", country);
-                request.setAttribute("address2", address2);
-                request.setAttribute("state", state);
-                request.setAttribute("emailaddress", emailAddress);
-                request.setAttribute("postalcode", postalCode);
-                request.setAttribute("phone1", phone1);
-
+            request.setAttribute("prefixtitle", prefixTitle);
+            request.setAttribute("lastname", lastName);
+            request.setAttribute("firstname", firstName);
+            request.setAttribute("middlename", middleName);
+            request.setAttribute("suffix", suffix);
+            request.setAttribute("address1", address1);
+            request.setAttribute("city", city);
+            request.setAttribute("country", country);
+            request.setAttribute("address2", address2);
+            request.setAttribute("state", state);
+            request.setAttribute("emailaddress", emailAddress);
+            request.setAttribute("postalcode", postalCode);
+            request.setAttribute("phone1", phone1);
         
         try {
             
-            String url = "/editinfo.jsp";
+            String url = "/WEB-INF/jsp/editinfo.jsp";
             
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
             dispatcher.forward(request, response);
@@ -118,6 +118,8 @@ public class EditInfoLaunchServlet extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(EditInfoLaunchServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EditInfoLaunchServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -136,6 +138,8 @@ public class EditInfoLaunchServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
+            Logger.getLogger(EditInfoLaunchServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(EditInfoLaunchServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
