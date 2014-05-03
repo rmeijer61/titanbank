@@ -64,11 +64,9 @@
                 <li class="navsubli"><a href="" target="main_content_iframe">Order Checks</a></li>
             </ul>    
         </li>
-        <li><a>My Profile</a>
+        <li><a>Personal Information</a>
             <ul class="level2">
-		<li class="navsubli"><a href="" target="main_content_iframe">Change Name</a></li>
-                <li class="navsubli"><a href="" target="main_content_iframe">Change Address</a></li>
-                <li class="navsubli"><a href="" target="main_content_iframe">Change Contact</a></li>
+		<li class="navsubli"><a href="editinfolaunchservlet" target="main_content_iframe">Change Personal Information</a></li>
             </ul>
         </li>
         <li><a>Settings</a>
