@@ -1,0 +1,29 @@
+/* 
+    Document   : editinfo
+    Created on : Apr 24, 2014, 4:11:41 PM
+    Author     : maxximilianseijo
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 250px;
+    text-align: left;
+
+}
+input {
+  display: inline-block;
+  float: right;
+}
+
+h1 { margin-left: 20px;}
+
+#saveButton { margin-top: 20px;}
+
