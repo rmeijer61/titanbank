@@ -66,7 +66,7 @@
         </li>
         <li><a>Personal Information</a>
             <ul class="level2">
-		<li class="navsubli"><a href="editinfolaunchservlet" target="main_content_iframe">Change Personal Information</a></li>
+		<li class="navsubli"><a href="editinfolaunchservlet" target="main_content_iframe">Change Personal Info</a></li>
             </ul>
         </li>
         <li><a>Settings</a>
