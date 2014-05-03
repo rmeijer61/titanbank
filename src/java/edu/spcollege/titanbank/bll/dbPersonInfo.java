@@ -1,3 +1,4 @@
+package edu.spcollege.titanbank.bll;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,9 +25,10 @@ public class dbPersonInfo {
         Connection conn = null;
         Properties connectionProps = new Properties();
         //these two need to be filled in with the correct database information
-        connectionProps.put("user", "databaseusername");
-        connectionProps.put("password", "databasepassword");
-        
+        //connectionProps.put("user", "databaseusername");
+        //connectionProps.put("password", "databasepassword");
+        connectionProps.put("user", "root");
+        connectionProps.put("password", "sesame");
         
         
         ResultSet rs = null;
