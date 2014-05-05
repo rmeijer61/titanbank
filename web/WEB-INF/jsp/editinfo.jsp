@@ -4,7 +4,8 @@
     Author     : maxximilianseijo
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"
+        import="edu.spcollege.titanbank.bll.*" %>
 <!DOCTYPE html>
 <html>
     <head>

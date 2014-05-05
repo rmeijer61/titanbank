@@ -69,9 +69,9 @@
 		<li class="navsubli"><a href="editinfolaunchservlet" target="main_content_iframe">Change Personal Info</a></li>
             </ul>
         </li>
-        <li><a>Settings</a>
+        <li><a>Password/Settings</a>
             <ul class="level2">
-		<li class="navsubli"><a href="" target="main_content_iframe">Change Password</a></li>
+		<li class="navsubli"><a href="editpasswordlaunchservlet" target="main_content_iframe">Change Password</a></li>
             </ul>
         </li>
         <li><a style="border-right:none">Contact Us</a>

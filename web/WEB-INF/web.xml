@@ -172,6 +172,26 @@
         <servlet-name>EditInfoServlet</servlet-name>
         <url-pattern>/editinfoservlet</url-pattern>
     </servlet-mapping>
+    <!-- Max S. Change password (Launch) -->
+    <servlet>
+        <servlet-name>EditPasswordLaunchServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.EditPasswordLaunchServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditPasswordLaunchServlet</servlet-name>
+        <url-pattern>/editpasswordlaunchservlet</url-pattern>
+    </servlet-mapping>
+    <!-- Max S. Change password -->
+    <servlet>
+        <servlet-name>EditPasswordServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.EditPasswordServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditPasswordServlet</servlet-name>
+        <url-pattern>/editpasswordservlet</url-pattern>
+    </servlet-mapping>
     <!-- Add User -->
     <servlet>
         <servlet-name>AddUserServlet</servlet-name>
