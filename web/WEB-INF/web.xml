@@ -192,6 +192,26 @@
         <servlet-name>EditPasswordServlet</servlet-name>
         <url-pattern>/editpasswordservlet</url-pattern>
     </servlet-mapping>
+    <!-- Louis - Cancel Check -->
+    <servlet>
+        <servlet-name>CancelCheckServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.CancelCheckServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CancelCheckServlet</servlet-name>
+        <url-pattern>/cancelcheckservlet</url-pattern>
+    </servlet-mapping>
+    <!-- Louis - Manage Checks -->
+    <servlet>
+        <servlet-name>CheckInfoServlet</servlet-name>
+        <servlet-class>edu.spcollege.titanbank.controllers.CheckInfoServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CheckInfoServlet</servlet-name>
+        <url-pattern>/checkinfoservlet</url-pattern>
+    </servlet-mapping>
     <!-- Add User -->
     <servlet>
         <servlet-name>AddUserServlet</servlet-name>
