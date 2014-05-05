@@ -56,8 +56,8 @@
         </li>
         <li><a>Manage Customer Checks</a>
             <ul class="level2">
-                <li class="navsubli"><a href="" target="main_content_iframe">Search Checks</a></li>
-                <li class="navsubli"><a href="" target="main_content_iframe">Stop Payment</a></li>
+                <li class="navsubli"><a href="checkinfoservlet" target="main_content_iframe">Search Checks</a></li>
+                <li class="navsubli"><a href="cancelcheckservlet" target="main_content_iframe">Stop Payment</a></li>
             </ul>    
         </li>
         <li><a style="border-right:none">Contacts</a>
